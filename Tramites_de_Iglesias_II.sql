@@ -67,7 +67,7 @@ CREATE TABLE public.ceremonia (
 
 );
 ---------------------------------------------------------------------
-/*
+
 -- Bautismos
 insert into ceremonia values ('1','07/11/2020','1','1','si');
 insert into ceremonia values ('2','07/11/2020','2','2','si');
@@ -89,7 +89,7 @@ insert into ceremonia values ('14','12/11/2020','14','2','si');
 insert into ceremonia values ('15','12/12/2020','15','1','si');
 insert into ceremonia values ('16','18/11/2020','16','1','no');
 ---------------------------------------------------------------------
-*/
+
 
 CREATE TABLE public.persona (
 	id_persona integer NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE public.persona (
 	CONSTRAINT persona_pk PRIMARY KEY (id_persona)
 );
 ---------------------------------------------------------------------
-/*
+
 -- Bautismo
 insert into persona values ('1','1316360711','Juan Carlos','Sánchez Mendoza','13/12/2019','H','0954547851',
 'Montecristi, Montecristi','sanchezda@gmail.com','1','01/11/2020','Soltero');
@@ -160,7 +160,7 @@ insert into persona values ('15','1316360715','Andrea Camila','Solorzano Manzaba
 insert into persona values ('16','1316360716','Melisa Nicole','Alcivar Mendoza','18/09/1999','M','0954547816',
 'Montecristi, Montecristi','alcivarda@gmail.com','4','11/12/2020','Soltero');
 ---------------------------------------------------------------------
-*/
+
 
 CREATE TABLE public.familiar_persona (
 	id_familiar integer NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE public.familiar_persona (
 
 );
 ---------------------------------------------------------------------
-/*
+
 -- Bautismo
 insert into familiar_persona values ('1','Carlos Sánchez & Carmen Mendoza','Casados','Padres','Carlos Alonso & Maria Ester','Casados','1','null');
 insert into familiar_persona values ('2','Jose Santana & Maira Merchan','Casados','Padres','Andres Mendez & Sofia ALcivar','Solteros','2','null');
@@ -197,7 +197,7 @@ insert into familiar_persona values ('14','Javier Jaramillo & Paula Donoso(+)','
 insert into familiar_persona values ('15','Andres Solorzano & Marisol MAnzaba','Divorciados','Padres','Hernan Fernandez & Gema Juarez','Casados','15','Julio Reyez');
 insert into familiar_persona values ('16','Medardo Alcivar & Katerine Mendoza','Casados','Padres','Joel Jimenes & ELsa Tuarez','Casados','16','Luis Alcivar');
 ---------------------------------------------------------------------
-*/
+
 
 ---------------------------------------------------------------------
 -- Constraint
@@ -228,9 +228,10 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
 
+--				CONSULTAS		
 
 
-/*	Realizar un Trigger que no permita a una persona realizar más de un trámite del mismo tipo. */
+/*	Realizar un Trigger que no permita a una persona realizar más de un trámite del mismo tipo.	*/
 
 	create or replace function control_tramite() 
 		returns trigger as $control_tramite$
@@ -252,3 +253,17 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 	create trigger control_tramite before insert 
 		on persona for each row
 		execute procedure control_tramite();
+		
+		
+		
+/*	Procedimiento almacenado que permita mostrar el total de ingresos monetarios generados por todos los trámites del tipo boda.	*/
+	create or replace function ingresos_de_tramites()
+		returns numeric(6,3) 
+			as $ingresos_total_de_tramites$
+			
+		select sum(precio_tramite) from tramite, persona
+		
+				$ingresos_total_de_tramites$
+	language sql;
+	
+	select ingresos_de_tramites();
