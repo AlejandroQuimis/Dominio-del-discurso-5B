@@ -239,7 +239,8 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 				tramite_limite int;
 		begin 
 		select count(*) into contador_tramite 
-			from persona where id_tramite_tramite1 = new.id_tramite_tramite1;
+			from persona where (id_tramite_tramite1 = new.id_tramite_tramite1) 
+				and (cc_persona = new.cc_persona);
 		select max_tramite into tramite_limite from tramite;
 			if (contador_tramite >= tramite_limite) then
 				raise exception 'La persona que desea registrar ya ha realizado este tramite'; 
