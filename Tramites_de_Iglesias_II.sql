@@ -267,3 +267,27 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 	language sql;
 	
 	select ingresos_de_tramites();
+	
+/*	Reporte que en base al total de trámites realizados en la iglesia muestre de froma grafica todos los tramites realizados
+	y que los clasifique en dos: Si-> para las personas que solicitaron un tramite y si asistieron a la ceremonia, o No->para 
+	las personas que solocitaron el	tramite pero no se presentaron a la ceremonia respectiva.	*/
+	SELECT
+	     iglesia.id_iglesia,
+	     iglesia.nom_iglesia,
+	     iglesia.telf_iglesia,
+	     iglesia.dirc_iglesia,
+	     tramite.id_tramite,
+	     tramite.nom_tramite,
+	     persona.fecha_tramite,
+	     ceremonia.asistencia_ceremonia AS asistencia
+	FROM tramite 
+		INNER JOIN iglesia ON 
+			tramite.id_iglesia_iglesia = iglesia.id_iglesia
+		INNER JOIN persona ON 
+			tramite.id_tramite = persona.id_tramite_tramite1
+		INNER JOIN ceremonia ON 
+			persona.id_persona = ceremonia.id_persona_persona1
+	ORDER BY
+	     fecha_tramite ASC;
+	
+
