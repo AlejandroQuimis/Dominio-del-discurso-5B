@@ -232,7 +232,6 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
 /*	Realizar un Trigger que no permita a una persona realizar más de un trámite del mismo tipo.	*/
-
 	create or replace function control_tramite() 
 		returns trigger as $control_tramite$
 			declare
@@ -256,6 +255,12 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 		
 		
 		
+/*		*/	
+		
+		
+		
+		
+		
 /*	Procedimiento almacenado que permita mostrar el total de ingresos monetarios generados por todos los trámites del tipo boda.	*/
 	create or replace function ingresos_de_tramites()
 		returns numeric(6,3) 
@@ -268,7 +273,9 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 	
 	select ingresos_de_tramites();
 	
-/*	Reporte que en base al total de trámites realizados en la iglesia muestre de froma grafica todos los tramites realizados
+	
+	
+/*	Reporte que en base al total de trámites realizados en la iglesia muestre de forma grafica todos los tramites realizados
 	y que los clasifique en dos: Si-> para las personas que solicitaron un tramite y si asistieron a la ceremonia, o No->para 
 	las personas que solocitaron el	tramite pero no se presentaron a la ceremonia respectiva.	*/
 	SELECT
