@@ -255,9 +255,25 @@ ON DELETE RESTRICT ON UPDATE CASCADE;
 		
 		
 		
-/*		*/	
-		
-		
+/*	Cursor que permita mostrar la cantidad de trámites del mismo tipo realizados. 	*/	
+	create or replace function cantidad_tramite() returns text as $$
+	 declare
+		cantidad int = 0;
+		numero int;
+		almacenado record;
+	cant_tramite cursor for select * from tramite, persona
+ 			where tramite.id_tramite = persona.id_tramite_tramite1 and tramite.id_tramite = 4 ;		
+ 	  begin
+ 			for numero in cant_tramite 
+ 			loop cantidad = cantidad + count(numero.id_tramite);
+ 				end loop;
+ 	open cant_tramite;
+ 	fetch cant_tramite into almacenado;
+ raise notice 'Tipo de Tramite: %, cantidad: %', almacenado.nom_tramite, cantidad;
+ 	end $$
+ 	language 'plpgsql';
+ 
+select cantidad_tramite();	
 		
 		
 		
